@@ -1233,7 +1233,7 @@ public class GlobalStateMgr {
                 break;
             }
 
-            Thread.sleep(2000);
+            Thread.sleep(200);
             LOG.info("wait globalStateMgr to be ready. FE type: {}. is ready: {}", feType, isReady.get());
 
             if (System.currentTimeMillis() - lastLoggingTimeMs > 60000L) {

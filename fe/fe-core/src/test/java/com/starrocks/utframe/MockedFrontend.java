@@ -314,8 +314,8 @@ public class MockedFrontend {
         while (!fe.isReady() && tryCount < 600) {
             try {
                 tryCount++;
-                Thread.sleep(1000);
-                System.out.println("globalStateMgr is not ready, wait for 1 second");
+                Thread.sleep(100);
+                System.out.println("globalStateMgr is not ready, waiting...");
             } catch (InterruptedException e) {
                 e.printStackTrace();
             }
