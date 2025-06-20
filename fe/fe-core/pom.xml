@@ -42,6 +42,7 @@ under the License.
         <fe_ut_parallel>1</fe_ut_parallel>
         <jacoco.version>0.8.8</jacoco.version>
         <python>python</python>
+        <incremental.build>true</incremental.build>
     </properties>
 
     <profiles>
@@ -92,6 +93,175 @@ under the License.
             <properties>
                 <python>${env.PYTHON}</python>
             </properties>
+        </profile>
+        <profile>
+            <id>full</id>
+            <activation>
+                <activeByDefault>false</activeByDefault>
+            </activation>
+        <build>
+        <plugins>
+            <!-- clean fe/target dir before building -->
+            <plugin>
+                <artifactId>maven-clean-plugin</artifactId>
+                <version>3.1.0</version>
+                <executions>
+                    <execution>
+                        <id>auto-clean</id>
+                        <phase>initialize</phase>
+                        <goals>
+                            <goal>clean</goal>
+                        </goals>
+                    </execution>
+                </executions>
+            </plugin>
+
+            <!--thrift-->
+            <plugin>
+                <groupId>io.github.decster</groupId>
+                <artifactId>thrift-java-maven-plugin</artifactId>
+                <version>0.1.2-SNAPSHOT</version>
+                <configuration>
+                    <sourceDirectory>${starrocks.home}/gensrc/thrift</sourceDirectory>
+                    <incrementalCompilation>true</incrementalCompilation>
+                </configuration>
+                <executions>
+                    <execution>
+                        <id>thrift-sources</id>
+                        <phase>generate-sources</phase>
+                        <goals>
+                            <goal>compile</goal>
+                        </goals>
+                    </execution>
+                </executions>
+            </plugin>
+
+            <!--antlr-->
+            <plugin>
+                <groupId>org.antlr</groupId>
+                <artifactId>antlr4-maven-plugin</artifactId>
+                <version>4.9.2</version>
+                <executions>
+                    <execution>
+                        <id>antlr</id>
+                        <phase>generate-sources</phase>
+                        <goals>
+                            <goal>antlr4</goal>
+                        </goals>
+                        <configuration>
+                            <sourceDirectory>src/main/java/com/starrocks/sql/parser</sourceDirectory>
+                            <visitor>true</visitor>
+                            <arguments>
+                                <argument>-package</argument>
+                                <argument>com.starrocks.sql.parser</argument>
+                                <argument>-o</argument>
+                                <argument>${project.build.directory}/generated-sources/antlr4/com/starrocks/sql/parser</argument>
+                            </arguments>
+                        </configuration>
+                    </execution>
+                </executions>
+            </plugin>
+
+            <!-- run make to generate Version and builtin -->
+            <!-- also parse the proto for FE -->
+            <plugin>
+                <artifactId>maven-antrun-plugin</artifactId>
+                <version>1.8</version>
+                <executions>
+                    <execution>
+                        <id>generate-sources</id>
+                        <phase>generate-sources</phase>
+                        <configuration>
+                            <target>
+                                <property name="ant.python" value="${python}"/>
+                                <mkdir dir="${basedir}/target/generated-sources/proto"/>
+                                <exec executable="${java.home}/bin/java">
+                                    <arg value="-jar"/>
+                                    <arg value="${settings.localRepository}/com/starrocks/jprotobuf-starrocks/${jprotobuf-starrocks.version}/jprotobuf-starrocks-${jprotobuf-starrocks.version}-jar-with-dependencies.jar"/>
+                                    <arg value="--java_out=${basedir}/target/generated-sources/proto"/>
+                                    <arg value="${starrocks.home}/gensrc/proto/lake_types.proto"/>
+                                </exec>
+                                <exec executable="${java.home}/bin/java">
+                                    <arg value="-jar"/>
+                                    <arg value="${settings.localRepository}/com/starrocks/jprotobuf-starrocks/${jprotobuf-starrocks.version}/jprotobuf-starrocks-${jprotobuf-starrocks.version}-jar-with-dependencies.jar"/>
+                                    <arg value="--java_out=${basedir}/target/generated-sources/proto"/>
+                                    <arg value="${starrocks.home}/gensrc/proto/internal_service.proto"/>
+                                </exec>
+                                <exec executable="${java.home}/bin/java">
+                                    <arg value="-jar"/>
+                                    <arg value="${settings.localRepository}/com/starrocks/jprotobuf-starrocks/${jprotobuf-starrocks.version}/jprotobuf-starrocks-${jprotobuf-starrocks.version}-jar-with-dependencies.jar"/>
+                                    <arg value="--java_out=${basedir}/target/generated-sources/proto"/>
+                                    <arg value="${starrocks.home}/gensrc/proto/types.proto"/>
+                                </exec>
+                                <exec executable="${java.home}/bin/java">
+                                    <arg value="-jar"/>
+                                    <arg value="${settings.localRepository}/com/starrocks/jprotobuf-starrocks/${jprotobuf-starrocks.version}/jprotobuf-starrocks-${jprotobuf-starrocks.version}-jar-with-dependencies.jar"/>
+                                    <arg value="--java_out=${basedir}/target/generated-sources/proto"/>
+                                    <arg value="${starrocks.home}/gensrc/proto/tablet_schema.proto"/>
+                                </exec>
+                                <exec executable="${java.home}/bin/java">
+                                    <arg value="-jar"/>
+                                    <arg value="${settings.localRepository}/com/starrocks/jprotobuf-starrocks/${jprotobuf-starrocks.version}/jprotobuf-starrocks-${jprotobuf-starrocks.version}-jar-with-dependencies.jar"/>
+                                    <arg value="--java_out=${basedir}/target/generated-sources/proto"/>
+                                    <arg value="${starrocks.home}/gensrc/proto/lake_service.proto"/>
+                                </exec>
+                                <exec executable="${java.home}/bin/java">
+                                    <arg value="-jar"/>
+                                    <arg value="${settings.localRepository}/com/starrocks/jprotobuf-starrocks/${jprotobuf-starrocks.version}/jprotobuf-starrocks-${jprotobuf-starrocks.version}-jar-with-dependencies.jar"/>
+                                    <arg value="--java_out=${basedir}/target/generated-sources/proto"/>
+                                    <arg value="${starrocks.home}/gensrc/proto/encryption.proto"/>
+                                </exec>
+                                <exec executable="${ant.python}">
+                                    <env key="JAVA_HOME" value="${java.home}"/>
+                                    <arg value="${starrocks.home}/build-support/gen_build_version.py"/>
+                                    <arg value="--cpp"/>
+                                    <arg value="${starrocks.home}/fe/fe-core/target/generated-sources/build"/>
+                                    <arg value="--java"/>
+                                    <arg value="${starrocks.home}/fe/fe-core/target/generated-sources/build"/>
+                                </exec>
+                                <exec executable="${ant.python}">
+                                    <arg value="${starrocks.home}/gensrc/script/gen_functions.py"/>
+                                    <arg value="--cpp"/>
+                                    <arg value="${starrocks.home}/gensrc/build/gen_cpp"/>
+                                    <arg value="--java"/>
+                                    <arg value="${starrocks.home}/fe/fe-core/target/generated-sources/build"/>
+                                </exec>
+                            </target>
+                        </configuration>
+                        <goals>
+                            <goal>run</goal>
+                        </goals>
+                    </execution>
+                </executions>
+            </plugin>
+            <!-- copy all dependency libs to target lib dir -->
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-dependency-plugin</artifactId>
+                <version>3.1.1</version>
+                <executions>
+                    <execution>
+                        <id>copy-dependencies</id>
+                        <phase>package</phase>
+                        <goals>
+                            <goal>copy-dependencies</goal>
+                        </goals>
+                        <configuration>
+                            <outputDirectory>${project.build.directory}/lib</outputDirectory>
+                            <overWriteReleases>false</overWriteReleases>
+                            <overWriteSnapshots>false</overWriteSnapshots>
+                            <overWriteIfNewer>true</overWriteIfNewer>
+                            <skip>${skip.plugin}</skip>
+                            <!-- exclude test only jars(junit&mysql-connector), GPL jar(mysql-connector) must be excluded in release package -->
+                            <includeScope>runtime</includeScope>
+                        </configuration>
+                    </execution>
+                </executions>
+            </plugin>
+
+
+        </plugins>
+        </build>
         </profile>
     </profiles>
 
@@ -874,10 +1044,6 @@ under the License.
             <artifactId>arrow-jdbc</artifactId>
         </dependency>
 
-<!--        <dependency>-->
-<!--            <groupId>software.amazon.awssdk</groupId>-->
-<!--            <artifactId>bundle</artifactId>-->
-<!--        </dependency>-->
         <dependency>
             <groupId>software.amazon.awssdk</groupId>
             <artifactId>s3</artifactId>
@@ -990,51 +1156,6 @@ under the License.
                 </executions>
             </plugin>
 
-            <!--thrift-->
-            <plugin>
-                <groupId>io.github.decster</groupId>
-                <artifactId>thrift-java-maven-plugin</artifactId>
-                <version>0.1.1</version>
-                <configuration>
-                    <sourceDirectory>${starrocks.home}/gensrc/thrift</sourceDirectory>
-                </configuration>
-                <executions>
-                    <execution>
-                        <id>thrift-sources</id>
-                        <phase>generate-sources</phase>
-                        <goals>
-                            <goal>compile</goal>
-                        </goals>
-                    </execution>
-                </executions>
-            </plugin>
-
-            <!--antlr-->
-            <plugin>
-                <groupId>org.antlr</groupId>
-                <artifactId>antlr4-maven-plugin</artifactId>
-                <version>4.9.2</version>
-                <executions>
-                    <execution>
-                        <id>antlr</id>
-                        <phase>generate-sources</phase>
-                        <goals>
-                            <goal>antlr4</goal>
-                        </goals>
-                        <configuration>
-                            <sourceDirectory>src/main/java/com/starrocks/sql/parser</sourceDirectory>
-                            <visitor>true</visitor>
-                            <arguments>
-                                <argument>-package</argument>
-                                <argument>com.starrocks.sql.parser</argument>
-                                <argument>-o</argument>
-                                <argument>${project.build.directory}/generated-sources/antlr4/com/starrocks/sql/parser</argument>
-                            </arguments>
-                        </configuration>
-                    </execution>
-                </executions>
-            </plugin>
-
             <!-- jmockit -->
             <plugin>
                 <artifactId>maven-surefire-plugin</artifactId>
@@ -1057,79 +1178,6 @@ under the License.
                 </configuration>
             </plugin>
 
-            <!-- run make to generate Version and builtin -->
-            <!-- also parse the proto for FE -->
-            <plugin>
-                <artifactId>maven-antrun-plugin</artifactId>
-                <version>1.8</version>
-                <executions>
-                    <execution>
-                        <id>generate-sources</id>
-                        <phase>generate-sources</phase>
-                        <configuration>
-                            <target>
-                                <property name="ant.python" value="${python}"/>
-                                <mkdir dir="${basedir}/target/generated-sources/proto"/>
-                                <exec executable="${java.home}/bin/java">
-                                    <arg value="-jar"/>
-                                    <arg value="${settings.localRepository}/com/starrocks/jprotobuf-starrocks/${jprotobuf-starrocks.version}/jprotobuf-starrocks-${jprotobuf-starrocks.version}-jar-with-dependencies.jar"/>
-                                    <arg value="--java_out=${basedir}/target/generated-sources/proto"/>
-                                    <arg value="${starrocks.home}/gensrc/proto/lake_types.proto"/>
-                                </exec>
-                                <exec executable="${java.home}/bin/java">
-                                    <arg value="-jar"/>
-                                    <arg value="${settings.localRepository}/com/starrocks/jprotobuf-starrocks/${jprotobuf-starrocks.version}/jprotobuf-starrocks-${jprotobuf-starrocks.version}-jar-with-dependencies.jar"/>
-                                    <arg value="--java_out=${basedir}/target/generated-sources/proto"/>
-                                    <arg value="${starrocks.home}/gensrc/proto/internal_service.proto"/>
-                                </exec>
-                                <exec executable="${java.home}/bin/java">
-                                    <arg value="-jar"/>
-                                    <arg value="${settings.localRepository}/com/starrocks/jprotobuf-starrocks/${jprotobuf-starrocks.version}/jprotobuf-starrocks-${jprotobuf-starrocks.version}-jar-with-dependencies.jar"/>
-                                    <arg value="--java_out=${basedir}/target/generated-sources/proto"/>
-                                    <arg value="${starrocks.home}/gensrc/proto/types.proto"/>
-                                </exec>
-                                <exec executable="${java.home}/bin/java">
-                                    <arg value="-jar"/>
-                                    <arg value="${settings.localRepository}/com/starrocks/jprotobuf-starrocks/${jprotobuf-starrocks.version}/jprotobuf-starrocks-${jprotobuf-starrocks.version}-jar-with-dependencies.jar"/>
-                                    <arg value="--java_out=${basedir}/target/generated-sources/proto"/>
-                                    <arg value="${starrocks.home}/gensrc/proto/tablet_schema.proto"/>
-                                </exec>
-                                <exec executable="${java.home}/bin/java">
-                                    <arg value="-jar"/>
-                                    <arg value="${settings.localRepository}/com/starrocks/jprotobuf-starrocks/${jprotobuf-starrocks.version}/jprotobuf-starrocks-${jprotobuf-starrocks.version}-jar-with-dependencies.jar"/>
-                                    <arg value="--java_out=${basedir}/target/generated-sources/proto"/>
-                                    <arg value="${starrocks.home}/gensrc/proto/lake_service.proto"/>
-                                </exec>
-                                <exec executable="${java.home}/bin/java">
-                                    <arg value="-jar"/>
-                                    <arg value="${settings.localRepository}/com/starrocks/jprotobuf-starrocks/${jprotobuf-starrocks.version}/jprotobuf-starrocks-${jprotobuf-starrocks.version}-jar-with-dependencies.jar"/>
-                                    <arg value="--java_out=${basedir}/target/generated-sources/proto"/>
-                                    <arg value="${starrocks.home}/gensrc/proto/encryption.proto"/>
-                                </exec>
-                                <exec executable="${ant.python}">
-                                    <env key="JAVA_HOME" value="${java.home}"/>
-                                    <arg value="${starrocks.home}/build-support/gen_build_version.py"/>
-                                    <arg value="--cpp"/>
-                                    <arg value="${starrocks.home}/fe/fe-core/target/generated-sources/build"/>
-                                    <arg value="--java"/>
-                                    <arg value="${starrocks.home}/fe/fe-core/target/generated-sources/build"/>
-                                </exec>
-                                <exec executable="${ant.python}">
-                                    <arg value="${starrocks.home}/gensrc/script/gen_functions.py"/>
-                                    <arg value="--cpp"/>
-                                    <arg value="${starrocks.home}/gensrc/build/gen_cpp"/>
-                                    <arg value="--java"/>
-                                    <arg value="${starrocks.home}/fe/fe-core/target/generated-sources/build"/>
-                                </exec>
-                            </target>
-                        </configuration>
-                        <goals>
-                            <goal>run</goal>
-                        </goals>
-                    </execution>
-                </executions>
-            </plugin>
-
             <!-- add gensrc java build src dir -->
             <plugin>
                 <groupId>org.codehaus.mojo</groupId>
@@ -1148,33 +1196,9 @@ under the License.
                                 <source>${basedir}/target/generated-sources/build/</source>
                                 <source>${basedir}/target/generated-sources/proto/</source>
                                 <source>${basedir}/target/generated-sources/thrift/</source>
-                            
-                            </sources>
-                        </configuration>
-                    </execution>
-                </executions>
-            </plugin>
+                                <source>${basedir}/target/generated-sources/antlr4/</source>
 
-            <!-- copy all dependency libs to target lib dir -->
-            <plugin>
-                <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-dependency-plugin</artifactId>
-                <version>3.1.1</version>
-                <executions>
-                    <execution>
-                        <id>copy-dependencies</id>
-                        <phase>package</phase>
-                        <goals>
-                            <goal>copy-dependencies</goal>
-                        </goals>
-                        <configuration>
-                            <outputDirectory>${project.build.directory}/lib</outputDirectory>
-                            <overWriteReleases>false</overWriteReleases>
-                            <overWriteSnapshots>false</overWriteSnapshots>
-                            <overWriteIfNewer>true</overWriteIfNewer>
-                            <skip>${skip.plugin}</skip>
-                            <!-- exclude test only jars(junit&mysql-connector), GPL jar(mysql-connector) must be excluded in release package -->
-                            <includeScope>runtime</includeScope>
+                            </sources>
                         </configuration>
                     </execution>
                 </executions>
@@ -1223,20 +1247,6 @@ under the License.
 <!--                </executions>-->
 <!--            </plugin>-->
 
-            <!-- clean fe/target dir before building -->
-            <plugin>
-                <artifactId>maven-clean-plugin</artifactId>
-                <version>3.1.0</version>
-                <executions>
-                    <execution>
-                        <id>auto-clean</id>
-                        <phase>initialize</phase>
-                        <goals>
-                            <goal>clean</goal>
-                        </goals>
-                    </execution>
-                </executions>
-            </plugin>
         </plugins>
     </build>
 </project>
