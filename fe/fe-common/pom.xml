@@ -35,6 +35,7 @@ under the License.
     <packaging>jar</packaging>
 
     <properties>
+        <starrocks.home>${basedir}/../../</starrocks.home>
         <!-- There is no unit tests for this project, ignore the error if no case found -->
         <failIfNoSpecifiedTests>false</failIfNoSpecifiedTests>
     </properties>

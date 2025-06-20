@@ -38,6 +38,7 @@ under the License.
         <maven.compiler.source>17</maven.compiler.source>
         <maven.compiler.target>17</maven.compiler.target>
         <maven.compiler.release>17</maven.compiler.release>
+        <starrocks.home>${basedir}/../../</starrocks.home>
         <fe_ut_parallel>1</fe_ut_parallel>
         <jacoco.version>0.8.8</jacoco.version>
         <python>python</python>
@@ -51,6 +52,34 @@ under the License.
             </activation>
             <properties>
                 <starrocks.thrift>thrift</starrocks.thrift>
+            </properties>
+        </profile>
+        <profile>
+        <id>thrift</id>
+        <activation>
+            <property>
+                <name>env.THRIFT</name>
+            </property>
+        </activation>
+        <properties>
+            <starrocks.thrift>${env.THRIFT}</starrocks.thrift>
+        </properties>
+    </profile>
+        <profile>
+            <id>thirdparty</id>
+            <activation>
+                <file>
+                    <exists>${env.STARROCKS_THIRDPARTY}/installed/bin/thrift</exists>
+                </file>
+            </activation>
+            <properties>
+                <starrocks.thrift>${env.STARROCKS_THIRDPARTY}/installed/bin/thrift</starrocks.thrift>
+            </properties>
+        </profile>
+        <profile>
+            <id>windows</id>
+            <properties>
+                <starrocks.thrift>thrift.exe</starrocks.thrift>
             </properties>
         </profile>
         <profile>
@@ -966,6 +995,9 @@ under the License.
                 <groupId>io.github.decster</groupId>
                 <artifactId>thrift-java-maven-plugin</artifactId>
                 <version>0.1.1</version>
+                <configuration>
+                    <sourceDirectory>${starrocks.home}/gensrc/thrift</sourceDirectory>
+                </configuration>
                 <executions>
                     <execution>
                         <id>thrift-sources</id>
@@ -1036,53 +1068,58 @@ under the License.
                         <phase>generate-sources</phase>
                         <configuration>
                             <target>
+                                <property name="ant.python" value="${python}"/>
                                 <mkdir dir="${basedir}/target/generated-sources/proto"/>
                                 <exec executable="${java.home}/bin/java">
                                     <arg value="-jar"/>
                                     <arg value="${settings.localRepository}/com/starrocks/jprotobuf-starrocks/${jprotobuf-starrocks.version}/jprotobuf-starrocks-${jprotobuf-starrocks.version}-jar-with-dependencies.jar"/>
                                     <arg value="--java_out=${basedir}/target/generated-sources/proto"/>
-                                    <arg value="${basedir}/src/main/proto/lake_types.proto"/>
+                                    <arg value="${starrocks.home}/gensrc/proto/lake_types.proto"/>
                                 </exec>
                                 <exec executable="${java.home}/bin/java">
                                     <arg value="-jar"/>
                                     <arg value="${settings.localRepository}/com/starrocks/jprotobuf-starrocks/${jprotobuf-starrocks.version}/jprotobuf-starrocks-${jprotobuf-starrocks.version}-jar-with-dependencies.jar"/>
                                     <arg value="--java_out=${basedir}/target/generated-sources/proto"/>
-                                    <arg value="${basedir}/src/main/proto/internal_service.proto"/>
+                                    <arg value="${starrocks.home}/gensrc/proto/internal_service.proto"/>
                                 </exec>
                                 <exec executable="${java.home}/bin/java">
                                     <arg value="-jar"/>
                                     <arg value="${settings.localRepository}/com/starrocks/jprotobuf-starrocks/${jprotobuf-starrocks.version}/jprotobuf-starrocks-${jprotobuf-starrocks.version}-jar-with-dependencies.jar"/>
                                     <arg value="--java_out=${basedir}/target/generated-sources/proto"/>
-                                    <arg value="${basedir}/src/main/proto/types.proto"/>
+                                    <arg value="${starrocks.home}/gensrc/proto/types.proto"/>
                                 </exec>
                                 <exec executable="${java.home}/bin/java">
                                     <arg value="-jar"/>
                                     <arg value="${settings.localRepository}/com/starrocks/jprotobuf-starrocks/${jprotobuf-starrocks.version}/jprotobuf-starrocks-${jprotobuf-starrocks.version}-jar-with-dependencies.jar"/>
                                     <arg value="--java_out=${basedir}/target/generated-sources/proto"/>
-                                    <arg value="${basedir}/src/main/proto/tablet_schema.proto"/>
+                                    <arg value="${starrocks.home}/gensrc/proto/tablet_schema.proto"/>
                                 </exec>
                                 <exec executable="${java.home}/bin/java">
                                     <arg value="-jar"/>
                                     <arg value="${settings.localRepository}/com/starrocks/jprotobuf-starrocks/${jprotobuf-starrocks.version}/jprotobuf-starrocks-${jprotobuf-starrocks.version}-jar-with-dependencies.jar"/>
                                     <arg value="--java_out=${basedir}/target/generated-sources/proto"/>
-                                    <arg value="${basedir}/src/main/proto/lake_service.proto"/>
+                                    <arg value="${starrocks.home}/gensrc/proto/lake_service.proto"/>
                                 </exec>
                                 <exec executable="${java.home}/bin/java">
                                     <arg value="-jar"/>
                                     <arg value="${settings.localRepository}/com/starrocks/jprotobuf-starrocks/${jprotobuf-starrocks.version}/jprotobuf-starrocks-${jprotobuf-starrocks.version}-jar-with-dependencies.jar"/>
                                     <arg value="--java_out=${basedir}/target/generated-sources/proto"/>
-                                    <arg value="${basedir}/src/main/proto/encryption.proto"/>
+                                    <arg value="${starrocks.home}/gensrc/proto/encryption.proto"/>
                                 </exec>
-                                <exec executable="${python}">
+                                <exec executable="${ant.python}">
                                     <env key="JAVA_HOME" value="${java.home}"/>
-                                    <arg value="${basedir}/../gen_build_version.py"/>
+                                    <arg value="${starrocks.home}/build-support/gen_build_version.py"/>
+                                    <arg value="--cpp"/>
+                                    <arg value="${starrocks.home}/fe/fe-core/target/generated-sources/build"/>
                                     <arg value="--java"/>
-                                    <arg value="${basedir}/target/generated-sources/build"/>
+                                    <arg value="${starrocks.home}/fe/fe-core/target/generated-sources/build"/>
                                 </exec>
-                                <exec executable="${python}" failonerror="true">
-                                    <arg value="${basedir}/../script/gen_functions.py"/>
+                                <exec executable="${ant.python}">
+                                    <arg value="${starrocks.home}/gensrc/script/gen_functions.py"/>
+                                    <arg value="--cpp"/>
+                                    <arg value="${starrocks.home}/gensrc/build/gen_cpp"/>
                                     <arg value="--java"/>
-                                    <arg value="${basedir}/target/generated-sources/build"/>
+                                    <arg value="${starrocks.home}/fe/fe-core/target/generated-sources/build"/>
                                 </exec>
                             </target>
                         </configuration>
@@ -1119,29 +1156,29 @@ under the License.
             </plugin>
 
             <!-- copy all dependency libs to target lib dir -->
-<!--            <plugin>-->
-<!--                <groupId>org.apache.maven.plugins</groupId>-->
-<!--                <artifactId>maven-dependency-plugin</artifactId>-->
-<!--                <version>3.1.1</version>-->
-<!--                <executions>-->
-<!--                    <execution>-->
-<!--                        <id>copy-dependencies</id>-->
-<!--                        <phase>package</phase>-->
-<!--                        <goals>-->
-<!--                            <goal>copy-dependencies</goal>-->
-<!--                        </goals>-->
-<!--                        <configuration>-->
-<!--                            <outputDirectory>${project.build.directory}/lib</outputDirectory>-->
-<!--                            <overWriteReleases>false</overWriteReleases>-->
-<!--                            <overWriteSnapshots>false</overWriteSnapshots>-->
-<!--                            <overWriteIfNewer>true</overWriteIfNewer>-->
-<!--                            <skip>${skip.plugin}</skip>-->
-<!--                            &lt;!&ndash; exclude test only jars(junit&mysql-connector), GPL jar(mysql-connector) must be excluded in release package &ndash;&gt;-->
-<!--                            <includeScope>runtime</includeScope>-->
-<!--                        </configuration>-->
-<!--                    </execution>-->
-<!--                </executions>-->
-<!--            </plugin>-->
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-dependency-plugin</artifactId>
+                <version>3.1.1</version>
+                <executions>
+                    <execution>
+                        <id>copy-dependencies</id>
+                        <phase>package</phase>
+                        <goals>
+                            <goal>copy-dependencies</goal>
+                        </goals>
+                        <configuration>
+                            <outputDirectory>${project.build.directory}/lib</outputDirectory>
+                            <overWriteReleases>false</overWriteReleases>
+                            <overWriteSnapshots>false</overWriteSnapshots>
+                            <overWriteIfNewer>true</overWriteIfNewer>
+                            <skip>${skip.plugin}</skip>
+                            <!-- exclude test only jars(junit&mysql-connector), GPL jar(mysql-connector) must be excluded in release package -->
+                            <includeScope>runtime</includeScope>
+                        </configuration>
+                    </execution>
+                </executions>
+            </plugin>
 
             <plugin>
                 <groupId>org.codehaus.mojo</groupId>
