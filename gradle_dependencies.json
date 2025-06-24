@@ -1,0 +1,1649 @@
+[
+    {
+        "file": "fe/build.gradle.kts",
+        "properties": {
+            "starrocks.home": "${rootDir}/../",
+            "jprotobuf-starrocks.version": "1.0.0",
+            "log4j.version": "2.19.0",
+            "jackson.version": "2.15.2",
+            "spark.version": "2.4.6",
+            "tomcat.version": "8.5.70",
+            "parquet.version": "1.15.2",
+            "hadoop.version": "3.4.1",
+            "gcs.connector.version": "hadoop3-2.2.26",
+            "hudi.version": "1.0.2",
+            "hive-apache.version": "3.1.2-22",
+            "dlf-metastore-client.version": "0.2.14",
+            "odps.version": "0.48.7-public",
+            "kudu.version": "1.17.1",
+            "hikaricp.version": "3.4.5",
+            "kafka-clients.version": "3.4.0",
+            "arrow.version": "18.0.0",
+            "grpc.version": "1.63.0",
+            "io.netty.version": "4.1.118.Final",
+            "puppycrawl.version": "10.21.1",
+            "aws-v2-sdk.version": "2.29.52",
+            "avro.version": "1.12.0",
+            "dnsjava.version": "3.6.3",
+            "nimbusds.version": "9.37.2",
+            "protobuf-java.version": "3.25.5",
+            "paimon.version": "1.0.1",
+            "delta-kernel.version": "4.0.0rc1",
+            "iceberg.version": "1.9.0",
+            "staros.version": "3.5-rc1",
+            "jetty.version": "9.4.57.v20241219",
+            "byteman.version": "4.0.24",
+            "azure.version": "1.2.34",
+            "fastutil.version": "8.5.15",
+            "commons-beanutils.version": "1.11.0",
+            "hbase.version": "2.6.2",
+            "opentelemetry.version": "1.14.0"
+        },
+        "dependencies": [
+            {
+                "group": "commons-cli",
+                "name": "commons-cli",
+                "version": "1.4",
+                "config": "implementation"
+            },
+            {
+                "group": "commons-codec",
+                "name": "commons-codec",
+                "version": "1.13",
+                "config": "implementation"
+            },
+            {
+                "group": "commons-lang",
+                "name": "commons-lang",
+                "version": "2.4",
+                "config": "implementation"
+            },
+            {
+                "group": "org.apache.commons",
+                "name": "commons-lang3",
+                "version": "3.9",
+                "config": "implementation"
+            },
+            {
+                "group": "org.apache.commons",
+                "name": "commons-pool2",
+                "version": "2.3",
+                "config": "implementation"
+            },
+            {
+                "group": "com.github.seancfoley",
+                "name": "ipaddress",
+                "version": "5.4.2",
+                "config": "implementation"
+            },
+            {
+                "group": "org.apache.velocity",
+                "name": "velocity-engine-core",
+                "version": "2.4.1",
+                "config": "implementation"
+            },
+            {
+                "group": "org.apache.httpcomponents.client5",
+                "name": "httpclient5",
+                "version": "5.4.3",
+                "config": "implementation"
+            },
+            {
+                "group": "commons-validator",
+                "name": "commons-validator",
+                "version": "1.7",
+                "config": "implementation"
+            },
+            {
+                "group": "com.google.code.gson",
+                "name": "gson",
+                "version": "2.8.9",
+                "config": "implementation"
+            },
+            {
+                "group": "com.google.guava",
+                "name": "guava",
+                "version": "32.0.1-jre",
+                "config": "implementation"
+            },
+            {
+                "group": "net.sourceforge.czt.dev",
+                "name": "java-cup",
+                "version": "0.11-a-czt02-cdh",
+                "config": "implementation"
+            },
+            {
+                "group": "de.jflex",
+                "name": "jflex",
+                "version": "1.4.3",
+                "config": "implementation"
+            },
+            {
+                "group": "com.github.hazendaz.jmockit",
+                "name": "jmockit",
+                "version": "1.49.4",
+                "config": "testImplementation"
+            },
+            {
+                "group": "com.baidu",
+                "name": "jprotobuf-rpc-common",
+                "version": "1.9",
+                "config": "implementation"
+            },
+            {
+                "group": "com.baidu",
+                "name": "jprotobuf-precompile-plugin",
+                "version": "2.2.12",
+                "config": "compileOnly"
+            },
+            {
+                "group": "com.baidu",
+                "name": "jprotobuf-rpc-core",
+                "version": "4.2.1",
+                "config": "implementation"
+            },
+            {
+                "group": "commons-io",
+                "name": "commons-io",
+                "version": "2.16.1",
+                "config": "implementation"
+            },
+            {
+                "group": "org.json",
+                "name": "json",
+                "version": "20231013",
+                "config": "implementation"
+            },
+            {
+                "group": "junit",
+                "name": "junit",
+                "version": "4.13.1",
+                "config": "testImplementation"
+            },
+            {
+                "group": "org.apache.thrift",
+                "name": "libthrift",
+                "version": "0.20.0",
+                "config": "implementation"
+            },
+            {
+                "group": "com.squareup.okhttp3",
+                "name": "okhttp",
+                "version": "4.10.0",
+                "config": "implementation"
+            },
+            {
+                "group": "com.squareup.okio",
+                "name": "okio",
+                "version": "3.4.0",
+                "config": "implementation"
+            },
+            {
+                "group": "javax.validation",
+                "name": "validation-api",
+                "version": "1.1.0.Final",
+                "config": "implementation"
+            },
+            {
+                "group": "org.slf4j",
+                "name": "slf4j-api",
+                "version": "1.7.30",
+                "config": "implementation"
+            },
+            {
+                "group": "com.github.oshi",
+                "name": "oshi-core",
+                "version": "6.2.1",
+                "config": "implementation"
+            },
+            {
+                "group": "org.jboss.xnio",
+                "name": "xnio-nio",
+                "version": "3.8.16.Final",
+                "config": "implementation"
+            },
+            {
+                "group": "javax.annotation",
+                "name": "javax.annotation-api",
+                "version": "1.3.2",
+                "config": "implementation"
+            },
+            {
+                "group": "com.sun.activation",
+                "name": "javax.activation",
+                "version": "1.2.0",
+                "config": "implementation"
+            },
+            {
+                "group": "javax.xml.ws",
+                "name": "jaxws-api",
+                "version": "2.3.0",
+                "config": "implementation"
+            },
+            {
+                "group": "org.roaringbitmap",
+                "name": "RoaringBitmap",
+                "version": "0.8.13",
+                "config": "implementation"
+            },
+            {
+                "group": "org.apache.ivy",
+                "name": "ivy",
+                "version": "2.5.2",
+                "config": "implementation"
+            },
+            {
+                "group": "com.aliyun",
+                "name": "datalake20200710",
+                "version": "2.0.12",
+                "config": "implementation"
+            },
+            {
+                "group": "commons-collections",
+                "name": "commons-collections",
+                "version": "3.2.2",
+                "config": "implementation"
+            },
+            {
+                "group": "org.scala-lang",
+                "name": "scala-library",
+                "version": "2.12.10",
+                "config": "implementation"
+            },
+            {
+                "group": "com.esotericsoftware",
+                "name": "kryo-shaded",
+                "version": "4.0.2",
+                "config": "implementation"
+            },
+            {
+                "group": "com.github.ben-manes.caffeine",
+                "name": "caffeine",
+                "version": "2.9.3",
+                "config": "implementation"
+            },
+            {
+                "group": "com.opencsv",
+                "name": "opencsv",
+                "version": "5.7.1",
+                "config": "implementation"
+            },
+            {
+                "group": "org.jdom",
+                "name": "jdom2",
+                "version": "2.0.6.1",
+                "config": "implementation"
+            },
+            {
+                "group": "com.qcloud.cos",
+                "name": "hadoop-cos",
+                "version": "3.3.0-8.3.2",
+                "config": "implementation"
+            },
+            {
+                "group": "com.qcloud",
+                "name": "chdfs_hadoop_plugin_network",
+                "version": "3.2",
+                "config": "implementation"
+            },
+            {
+                "group": "com.fasterxml.uuid",
+                "name": "java-uuid-generator",
+                "version": "5.1.0",
+                "config": "implementation"
+            },
+            {
+                "group": "org.mariadb.jdbc",
+                "name": "mariadb-java-client",
+                "version": "3.3.2",
+                "config": "implementation"
+            },
+            {
+                "group": "org.postgresql",
+                "name": "postgresql",
+                "version": "42.4.4",
+                "config": "implementation"
+            },
+            {
+                "group": "com.clickhouse",
+                "name": "clickhouse-jdbc",
+                "version": "0.4.6",
+                "config": "implementation"
+            },
+            {
+                "group": "com.oracle.database.jdbc",
+                "name": "ojdbc10",
+                "version": "19.18.0.0",
+                "config": "implementation"
+            },
+            {
+                "group": "com.oracle.database.nls",
+                "name": "orai18n",
+                "version": "19.18.0.0",
+                "config": "implementation"
+            },
+            {
+                "group": "com.microsoft.sqlserver",
+                "name": "mssql-jdbc",
+                "version": "12.4.2.jre11",
+                "config": "implementation"
+            },
+            {
+                "group": "com.mysql",
+                "name": "mysql-connector-j",
+                "version": "9.2.0",
+                "config": "implementation"
+            },
+            {
+                "group": "com.mockrunner",
+                "name": "mockrunner-jdbc",
+                "version": "1.0.1",
+                "config": "testImplementation"
+            },
+            {
+                "group": "org.apache.commons",
+                "name": "commons-dbcp2",
+                "version": "2.9.0",
+                "config": "implementation"
+            },
+            {
+                "group": "jline",
+                "name": "jline",
+                "version": "2.14.6",
+                "config": "implementation"
+            },
+            {
+                "group": "org.apache.groovy",
+                "name": "groovy",
+                "version": "4.0.9",
+                "config": "implementation"
+            },
+            {
+                "group": "org.apache.groovy",
+                "name": "groovy-groovysh",
+                "version": "4.0.9",
+                "config": "implementation"
+            },
+            {
+                "group": "io.airlift",
+                "name": "concurrent",
+                "version": "202",
+                "config": "implementation"
+            },
+            {
+                "group": "io.airlift",
+                "name": "aircompressor",
+                "version": "0.27",
+                "config": "implementation"
+            },
+            {
+                "group": "io.airlift",
+                "name": "security",
+                "version": "202",
+                "config": "implementation"
+            },
+            {
+                "group": "org.owasp.encoder",
+                "name": "encoder",
+                "version": "1.3.1",
+                "config": "implementation"
+            },
+            {
+                "group": "org.xerial.snappy",
+                "name": "snappy-java",
+                "version": "1.1.10.5",
+                "config": "implementation"
+            },
+            {
+                "group": "org.apache.ranger",
+                "name": "ranger-plugins-common",
+                "version": "2.5.0",
+                "config": "implementation"
+            },
+            {
+                "group": "org.antlr",
+                "name": "antlr4",
+                "version": "4.9.2",
+                "config": "implementation"
+            },
+            {
+                "group": "com.starrocks",
+                "name": "plugin-common",
+                "version": "1.0.0",
+                "config": "implementation"
+            },
+            {
+                "group": "com.starrocks",
+                "name": "hive-udf",
+                "version": "1.0.0",
+                "config": "implementation"
+            },
+            {
+                "group": "com.starrocks",
+                "name": "fe-common",
+                "version": "1.0.0",
+                "config": "implementation"
+            },
+            {
+                "group": "com.starrocks",
+                "name": "spark-dpp",
+                "version": "1.0.0",
+                "config": "implementation"
+            },
+            {
+                "group": "com.starrocks",
+                "name": "starrocks-bdb-je",
+                "version": "18.3.20",
+                "config": "implementation"
+            }
+        ]
+    },
+    {
+        "file": "fe/fe-common/build.gradle.kts",
+        "properties": {},
+        "dependencies": []
+    },
+    {
+        "file": "fe/fe-core/build.gradle.kts",
+        "properties": {
+            "protoDir": "../../gensrc/proto",
+            "outputDir": "${layout.buildDirectory.get()}/generated-sources/proto"
+        },
+        "dependencies": [
+            {
+                "group": "org.antlr",
+                "name": "antlr4",
+                "version": "4.9.2",
+                "config": "antlr"
+            },
+            {
+                "group": "project",
+                "name": ":fe-common",
+                "version": null,
+                "config": "implementation"
+            },
+            {
+                "group": "project",
+                "name": ":plugin-common",
+                "version": null,
+                "config": "implementation"
+            },
+            {
+                "group": "project",
+                "name": ":hive-udf",
+                "version": null,
+                "config": "implementation"
+            },
+            {
+                "group": "project",
+                "name": ":spark-dpp",
+                "version": null,
+                "config": "implementation"
+            },
+            {
+                "group": "commons-cli",
+                "name": "commons-cli",
+                "version": null,
+                "config": "implementation"
+            },
+            {
+                "group": "commons-codec",
+                "name": "commons-codec",
+                "version": null,
+                "config": "implementation"
+            },
+            {
+                "group": "commons-lang",
+                "name": "commons-lang",
+                "version": null,
+                "config": "implementation"
+            },
+            {
+                "group": "org.apache.commons",
+                "name": "commons-lang3",
+                "version": null,
+                "config": "implementation"
+            },
+            {
+                "group": "org.apache.commons",
+                "name": "commons-pool2",
+                "version": null,
+                "config": "implementation"
+            },
+            {
+                "group": "org.apache.kudu",
+                "name": "kudu-client",
+                "version": null,
+                "config": "implementation"
+            },
+            {
+                "group": "com.github.seancfoley",
+                "name": "ipaddress",
+                "version": null,
+                "config": "implementation"
+            },
+            {
+                "group": "org.apache.velocity",
+                "name": "velocity-engine-core",
+                "version": null,
+                "config": "implementation"
+            },
+            {
+                "group": "org.apache.httpcomponents.client5",
+                "name": "httpclient5",
+                "version": null,
+                "config": "implementation"
+            },
+            {
+                "group": "commons-validator",
+                "name": "commons-validator",
+                "version": null,
+                "config": "implementation"
+            },
+            {
+                "group": "com.google.code.gson",
+                "name": "gson",
+                "version": null,
+                "config": "implementation"
+            },
+            {
+                "group": "com.google.guava",
+                "name": "guava",
+                "version": null,
+                "config": "implementation"
+            },
+            {
+                "group": "com.fasterxml.jackson.core",
+                "name": "jackson-core",
+                "version": null,
+                "config": "implementation"
+            },
+            {
+                "group": "com.fasterxml.jackson.core",
+                "name": "jackson-annotations",
+                "version": null,
+                "config": "implementation"
+            },
+            {
+                "group": "com.fasterxml.jackson.core",
+                "name": "jackson-databind",
+                "version": null,
+                "config": "implementation"
+            },
+            {
+                "group": "com.fasterxml.jackson.dataformat",
+                "name": "jackson-dataformat-yaml",
+                "version": null,
+                "config": "implementation"
+            },
+            {
+                "group": "com.fasterxml.jackson.module",
+                "name": "jackson-module-jaxb-annotations",
+                "version": null,
+                "config": "implementation"
+            },
+            {
+                "group": "net.sourceforge.czt.dev",
+                "name": "java-cup",
+                "version": null,
+                "config": "implementation"
+            },
+            {
+                "group": "de.jflex",
+                "name": "jflex",
+                "version": null,
+                "config": "implementation"
+            },
+            {
+                "group": "com.starrocks",
+                "name": "jprotobuf-starrocks",
+                "version": null,
+                "config": "implementation"
+            },
+            {
+                "group": "com.baidu",
+                "name": "jprotobuf-rpc-common",
+                "version": null,
+                "config": "implementation"
+            },
+            {
+                "group": "com.baidu",
+                "name": "jprotobuf-rpc-core",
+                "version": null,
+                "config": "implementation"
+            },
+            {
+                "group": "com.baidu",
+                "name": "jprotobuf-precompile-plugin",
+                "version": null,
+                "config": "compileOnly"
+            },
+            {
+                "group": "org.apache.logging.log4j",
+                "name": "log4j-api",
+                "version": null,
+                "config": "implementation"
+            },
+            {
+                "group": "org.apache.logging.log4j",
+                "name": "log4j-core",
+                "version": null,
+                "config": "implementation"
+            },
+            {
+                "group": "org.apache.logging.log4j",
+                "name": "log4j-slf4j-impl",
+                "version": null,
+                "config": "implementation"
+            },
+            {
+                "group": "org.apache.logging.log4j",
+                "name": "log4j-layout-template-json",
+                "version": null,
+                "config": "implementation"
+            },
+            {
+                "group": "org.apache.logging.log4j",
+                "name": "log4j-1.2-api",
+                "version": null,
+                "config": "implementation"
+            },
+            {
+                "group": "io.netty",
+                "name": "netty-all",
+                "version": null,
+                "config": "implementation"
+            },
+            {
+                "group": "io.netty",
+                "name": "netty-handler",
+                "version": null,
+                "config": "implementation"
+            },
+            {
+                "group": "com.google.protobuf",
+                "name": "protobuf-java",
+                "version": null,
+                "config": "implementation"
+            },
+            {
+                "group": "com.google.protobuf",
+                "name": "protobuf-java-util",
+                "version": null,
+                "config": "implementation"
+            },
+            {
+                "group": "com.squareup.okhttp3",
+                "name": "okhttp",
+                "version": null,
+                "config": "implementation"
+            },
+            {
+                "group": "com.squareup.okio",
+                "name": "okio",
+                "version": null,
+                "config": "implementation"
+            },
+            {
+                "group": "commons-io",
+                "name": "commons-io",
+                "version": null,
+                "config": "implementation"
+            },
+            {
+                "group": "org.json",
+                "name": "json",
+                "version": null,
+                "config": "implementation"
+            },
+            {
+                "group": "org.apache.thrift",
+                "name": "libthrift",
+                "version": null,
+                "config": "implementation"
+            },
+            {
+                "group": "javax.validation",
+                "name": "validation-api",
+                "version": null,
+                "config": "implementation"
+            },
+            {
+                "group": "org.slf4j",
+                "name": "slf4j-api",
+                "version": null,
+                "config": "implementation"
+            },
+            {
+                "group": "com.github.oshi",
+                "name": "oshi-core",
+                "version": null,
+                "config": "implementation"
+            },
+            {
+                "group": "org.roaringbitmap",
+                "name": "RoaringBitmap",
+                "version": null,
+                "config": "implementation"
+            },
+            {
+                "group": "dnsjava",
+                "name": "dnsjava",
+                "version": null,
+                "config": "implementation"
+            },
+            {
+                "group": "org.apache.avro",
+                "name": "avro",
+                "version": null,
+                "config": "implementation"
+            },
+            {
+                "group": "org.apache.ivy",
+                "name": "ivy",
+                "version": null,
+                "config": "implementation"
+            },
+            {
+                "group": "org.apache.kafka",
+                "name": "kafka-clients",
+                "version": null,
+                "config": "implementation"
+            },
+            {
+                "group": "org.jboss.xnio",
+                "name": "xnio-nio",
+                "version": null,
+                "config": "implementation"
+            },
+            {
+                "group": "javax.annotation",
+                "name": "javax.annotation-api",
+                "version": null,
+                "config": "implementation"
+            },
+            {
+                "group": "com.sun.activation",
+                "name": "javax.activation",
+                "version": null,
+                "config": "implementation"
+            },
+            {
+                "group": "javax.xml.ws",
+                "name": "jaxws-api",
+                "version": null,
+                "config": "implementation"
+            },
+            {
+                "group": "org.apache.spark",
+                "name": "spark-core_2.12",
+                "version": null,
+                "config": "implementation"
+            },
+            {
+                "group": "org.apache.spark",
+                "name": "spark-launcher_2.12",
+                "version": null,
+                "config": "implementation"
+            },
+            {
+                "group": "io.trino.hive",
+                "name": "hive-apache",
+                "version": null,
+                "config": "implementation"
+            },
+            {
+                "group": "com.aliyun",
+                "name": "datalake20200710",
+                "version": null,
+                "config": "implementation"
+            },
+            {
+                "group": "com.aliyun.datalake",
+                "name": "metastore-client-hive3",
+                "version": null,
+                "config": "implementation"
+            },
+            {
+                "group": "io.trino",
+                "name": "trino-parser",
+                "version": "385",
+                "config": "implementation"
+            },
+            {
+                "group": "org.apache.hadoop",
+                "name": "hadoop-common",
+                "version": null,
+                "config": "implementation"
+            },
+            {
+                "group": "commons-beanutils",
+                "name": "commons-beanutils",
+                "version": null,
+                "config": "implementation"
+            },
+            {
+                "group": "org.apache.hadoop",
+                "name": "hadoop-hdfs",
+                "version": null,
+                "config": "implementation"
+            },
+            {
+                "group": "org.apache.parquet",
+                "name": "parquet-hadoop",
+                "version": null,
+                "config": "implementation"
+            },
+            {
+                "group": "org.apache.parquet",
+                "name": "parquet-common",
+                "version": null,
+                "config": "implementation"
+            },
+            {
+                "group": "org.apache.parquet",
+                "name": "parquet-column",
+                "version": null,
+                "config": "implementation"
+            },
+            {
+                "group": "org.apache.parquet",
+                "name": "parquet-avro",
+                "version": null,
+                "config": "implementation"
+            },
+            {
+                "group": "commons-collections",
+                "name": "commons-collections",
+                "version": null,
+                "config": "implementation"
+            },
+            {
+                "group": "org.apache.hadoop",
+                "name": "hadoop-client",
+                "version": null,
+                "config": "implementation"
+            },
+            {
+                "group": "org.apache.hadoop",
+                "name": "hadoop-client-api",
+                "version": null,
+                "config": "implementation"
+            },
+            {
+                "group": "org.apache.hadoop",
+                "name": "hadoop-client-runtime",
+                "version": null,
+                "config": "implementation"
+            },
+            {
+                "group": "org.apache.hadoop",
+                "name": "hadoop-aws",
+                "version": null,
+                "config": "implementation"
+            },
+            {
+                "group": "org.jdom",
+                "name": "jdom2",
+                "version": null,
+                "config": "implementation"
+            },
+            {
+                "group": "org.apache.hadoop",
+                "name": "hadoop-aliyun",
+                "version": null,
+                "config": "implementation"
+            },
+            {
+                "group": "com.qcloud.cos",
+                "name": "hadoop-cos",
+                "version": null,
+                "config": "implementation"
+            },
+            {
+                "group": "com.qcloud",
+                "name": "chdfs_hadoop_plugin_network",
+                "version": null,
+                "config": "implementation"
+            },
+            {
+                "group": "org.apache.hadoop",
+                "name": "hadoop-azure-datalake",
+                "version": null,
+                "config": "implementation"
+            },
+            {
+                "group": "org.apache.hadoop",
+                "name": "hadoop-azure",
+                "version": null,
+                "config": "implementation"
+            },
+            {
+                "group": "com.azure",
+                "name": "azure-storage-blob",
+                "version": null,
+                "config": "implementation"
+            },
+            {
+                "group": "com.azure",
+                "name": "azure-identity",
+                "version": null,
+                "config": "implementation"
+            },
+            {
+                "group": "org.scala-lang",
+                "name": "scala-library",
+                "version": null,
+                "config": "implementation"
+            },
+            {
+                "group": "com.esotericsoftware",
+                "name": "kryo-shaded",
+                "version": null,
+                "config": "implementation"
+            },
+            {
+                "group": "com.github.ben-manes.caffeine",
+                "name": "caffeine",
+                "version": null,
+                "config": "implementation"
+            },
+            {
+                "group": "com.opencsv",
+                "name": "opencsv",
+                "version": null,
+                "config": "implementation"
+            },
+            {
+                "group": "org.apache.paimon",
+                "name": "paimon-bundle",
+                "version": null,
+                "config": "implementation"
+            },
+            {
+                "group": "org.apache.paimon",
+                "name": "paimon-s3",
+                "version": null,
+                "config": "implementation"
+            },
+            {
+                "group": "org.apache.paimon",
+                "name": "paimon-oss",
+                "version": null,
+                "config": "implementation"
+            },
+            {
+                "group": "com.fasterxml.uuid",
+                "name": "java-uuid-generator",
+                "version": null,
+                "config": "implementation"
+            },
+            {
+                "group": "org.apache.hudi",
+                "name": "hudi-common",
+                "version": null,
+                "config": "implementation"
+            },
+            {
+                "group": "org.apache.hbase",
+                "name": "hbase-client",
+                "version": null,
+                "config": "implementation"
+            },
+            {
+                "group": "org.apache.hbase",
+                "name": "hbase-server",
+                "version": null,
+                "config": "implementation"
+            },
+            {
+                "group": "org.apache.hudi",
+                "name": "hudi-io",
+                "version": null,
+                "config": "implementation"
+            },
+            {
+                "group": "org.apache.hudi",
+                "name": "hudi-hadoop-mr",
+                "version": null,
+                "config": "implementation"
+            },
+            {
+                "group": "org.mariadb.jdbc",
+                "name": "mariadb-java-client",
+                "version": null,
+                "config": "implementation"
+            },
+            {
+                "group": "org.postgresql",
+                "name": "postgresql",
+                "version": null,
+                "config": "implementation"
+            },
+            {
+                "group": "com.clickhouse",
+                "name": "clickhouse-jdbc",
+                "version": null,
+                "config": "implementation"
+            },
+            {
+                "group": "com.oracle.database.jdbc",
+                "name": "ojdbc10",
+                "version": null,
+                "config": "implementation"
+            },
+            {
+                "group": "com.oracle.database.nls",
+                "name": "orai18n",
+                "version": null,
+                "config": "implementation"
+            },
+            {
+                "group": "com.microsoft.sqlserver",
+                "name": "mssql-jdbc",
+                "version": null,
+                "config": "implementation"
+            },
+            {
+                "group": "com.mysql",
+                "name": "mysql-connector-j",
+                "version": null,
+                "config": "implementation"
+            },
+            {
+                "group": "org.apache.commons",
+                "name": "commons-dbcp2",
+                "version": null,
+                "config": "implementation"
+            },
+            {
+                "group": "io.opentelemetry",
+                "name": "opentelemetry-api",
+                "version": null,
+                "config": "implementation"
+            },
+            {
+                "group": "io.opentelemetry",
+                "name": "opentelemetry-sdk",
+                "version": null,
+                "config": "implementation"
+            },
+            {
+                "group": "io.opentelemetry",
+                "name": "opentelemetry-exporter-jaeger",
+                "version": null,
+                "config": "implementation"
+            },
+            {
+                "group": "io.opentelemetry",
+                "name": "opentelemetry-exporter-otlp",
+                "version": null,
+                "config": "implementation"
+            },
+            {
+                "group": "org.xerial.snappy",
+                "name": "snappy-java",
+                "version": null,
+                "config": "implementation"
+            },
+            {
+                "group": "io.delta",
+                "name": "delta-kernel-api",
+                "version": null,
+                "config": "implementation"
+            },
+            {
+                "group": "io.delta",
+                "name": "delta-kernel-defaults",
+                "version": null,
+                "config": "implementation"
+            },
+            {
+                "group": "org.apache.iceberg",
+                "name": "iceberg-api",
+                "version": null,
+                "config": "implementation"
+            },
+            {
+                "group": "org.apache.iceberg",
+                "name": "iceberg-bundled-guava",
+                "version": null,
+                "config": "implementation"
+            },
+            {
+                "group": "org.apache.iceberg",
+                "name": "iceberg-common",
+                "version": null,
+                "config": "implementation"
+            },
+            {
+                "group": "org.apache.iceberg",
+                "name": "iceberg-core",
+                "version": null,
+                "config": "implementation"
+            },
+            {
+                "group": "org.apache.iceberg",
+                "name": "iceberg-hive-metastore",
+                "version": null,
+                "config": "implementation"
+            },
+            {
+                "group": "org.apache.iceberg",
+                "name": "iceberg-aws",
+                "version": null,
+                "config": "implementation"
+            },
+            {
+                "group": "com.starrocks",
+                "name": "starclient",
+                "version": null,
+                "config": "implementation"
+            },
+            {
+                "group": "com.starrocks",
+                "name": "starmanager",
+                "version": null,
+                "config": "implementation"
+            },
+            {
+                "group": "org.eclipse.jetty",
+                "name": "jetty-client",
+                "version": null,
+                "config": "implementation"
+            },
+            {
+                "group": "org.eclipse.jetty",
+                "name": "jetty-server",
+                "version": null,
+                "config": "implementation"
+            },
+            {
+                "group": "org.eclipse.jetty",
+                "name": "jetty-io",
+                "version": null,
+                "config": "implementation"
+            },
+            {
+                "group": "org.eclipse.jetty",
+                "name": "jetty-webapp",
+                "version": null,
+                "config": "implementation"
+            },
+            {
+                "group": "org.eclipse.jetty",
+                "name": "jetty-servlet",
+                "version": null,
+                "config": "implementation"
+            },
+            {
+                "group": "org.eclipse.jetty",
+                "name": "jetty-util",
+                "version": null,
+                "config": "implementation"
+            },
+            {
+                "group": "org.eclipse.jetty",
+                "name": "jetty-util-ajax",
+                "version": null,
+                "config": "implementation"
+            },
+            {
+                "group": "org.eclipse.jetty",
+                "name": "jetty-security",
+                "version": null,
+                "config": "implementation"
+            },
+            {
+                "group": "org.apache.groovy",
+                "name": "groovy-groovysh",
+                "version": null,
+                "config": "implementation"
+            },
+            {
+                "group": "io.airlift",
+                "name": "concurrent",
+                "version": null,
+                "config": "implementation"
+            },
+            {
+                "group": "io.airlift",
+                "name": "aircompressor",
+                "version": null,
+                "config": "implementation"
+            },
+            {
+                "group": "io.airlift",
+                "name": "security",
+                "version": null,
+                "config": "implementation"
+            },
+            {
+                "group": "com.aliyun.odps",
+                "name": "odps-sdk-core",
+                "version": null,
+                "config": "implementation"
+            },
+            {
+                "group": "com.aliyun.odps",
+                "name": "odps-sdk-table-api",
+                "version": null,
+                "config": "implementation"
+            },
+            {
+                "group": "io.grpc",
+                "name": "grpc-api",
+                "version": null,
+                "config": "implementation"
+            },
+            {
+                "group": "io.grpc",
+                "name": "grpc-netty-shaded",
+                "version": null,
+                "config": "implementation"
+            },
+            {
+                "group": "io.grpc",
+                "name": "grpc-protobuf",
+                "version": null,
+                "config": "implementation"
+            },
+            {
+                "group": "io.grpc",
+                "name": "grpc-stub",
+                "version": null,
+                "config": "implementation"
+            },
+            {
+                "group": "io.grpc",
+                "name": "grpc-core",
+                "version": null,
+                "config": "implementation"
+            },
+            {
+                "group": "org.apache.arrow",
+                "name": "arrow-vector",
+                "version": null,
+                "config": "implementation"
+            },
+            {
+                "group": "org.apache.arrow",
+                "name": "arrow-memory-netty",
+                "version": null,
+                "config": "implementation"
+            },
+            {
+                "group": "org.apache.arrow",
+                "name": "flight-sql",
+                "version": null,
+                "config": "implementation"
+            },
+            {
+                "group": "org.apache.arrow",
+                "name": "flight-core",
+                "version": null,
+                "config": "implementation"
+            },
+            {
+                "group": "org.apache.arrow",
+                "name": "arrow-jdbc",
+                "version": null,
+                "config": "implementation"
+            },
+            {
+                "group": "org.owasp.encoder",
+                "name": "encoder",
+                "version": null,
+                "config": "implementation"
+            },
+            {
+                "group": "com.nimbusds",
+                "name": "nimbus-jose-jwt",
+                "version": null,
+                "config": "implementation"
+            },
+            {
+                "group": "org.apache.ranger",
+                "name": "ranger-plugins-common",
+                "version": null,
+                "config": "implementation"
+            },
+            {
+                "group": "org.antlr",
+                "name": "antlr4",
+                "version": null,
+                "config": "implementation"
+            },
+            {
+                "group": "org.jboss.byteman",
+                "name": "byteman",
+                "version": null,
+                "config": "implementation"
+            },
+            {
+                "group": "it.unimi.dsi",
+                "name": "fastutil",
+                "version": null,
+                "config": "implementation"
+            },
+            {
+                "group": "com.starrocks",
+                "name": "starrocks-bdb-je",
+                "version": null,
+                "config": "implementation"
+            },
+            {
+                "group": "jline",
+                "name": "jline",
+                "version": null,
+                "config": "implementation"
+            },
+            {
+                "group": "org.apache.groovy",
+                "name": "groovy-groovysh",
+                "version": null,
+                "config": "implementation"
+            },
+            {
+                "group": "org.apache.groovy",
+                "name": "groovy",
+                "version": null,
+                "config": "implementation"
+            },
+            {
+                "group": "org.quartz-scheduler",
+                "name": "quartz",
+                "version": "2.3.2",
+                "config": "implementation"
+            },
+            {
+                "group": "org.apache.spark",
+                "name": "spark-sql_2.12",
+                "version": null,
+                "config": "testImplementation"
+            },
+            {
+                "group": "junit",
+                "name": "junit",
+                "version": null,
+                "config": "testImplementation"
+            },
+            {
+                "group": "org.apache.arrow",
+                "name": "flight-sql-jdbc-driver",
+                "version": null,
+                "config": "testImplementation"
+            },
+            {
+                "group": "com.mockrunner",
+                "name": "mockrunner-jdbc",
+                "version": null,
+                "config": "testImplementation"
+            },
+            {
+                "group": "com.github.hazendaz.jmockit",
+                "name": "jmockit",
+                "version": null,
+                "config": "testImplementation"
+            },
+            {
+                "group": "org.openjdk.jmh",
+                "name": "jmh-core",
+                "version": "1.23",
+                "config": "testImplementation"
+            },
+            {
+                "group": "org.openjdk.jmh",
+                "name": "jmh-generator-annprocess",
+                "version": "1.23",
+                "config": "testImplementation"
+            },
+            {
+                "group": "org.junit.jupiter",
+                "name": "junit-jupiter-api",
+                "version": "5.7.1",
+                "config": "testImplementation"
+            },
+            {
+                "group": "org.junit.jupiter",
+                "name": "junit-jupiter-engine",
+                "version": "5.7.1",
+                "config": "testImplementation"
+            },
+            {
+                "group": "org.junit.jupiter",
+                "name": "junit-jupiter-params",
+                "version": "5.7.1",
+                "config": "testImplementation"
+            },
+            {
+                "group": "org.assertj",
+                "name": "assertj-core",
+                "version": "3.24.2",
+                "config": "testImplementation"
+            },
+            {
+                "group": "org.mockito",
+                "name": "mockito-inline",
+                "version": "4.11.0",
+                "config": "testImplementation"
+            },
+            {
+                "group": "com.carrotsearch",
+                "name": "junit-benchmarks",
+                "version": "0.7.2",
+                "config": "testImplementation"
+            },
+            {
+                "group": "com.github.hazendaz.jmockit",
+                "name": "jmockit",
+                "version": null,
+                "config": "testImplementation"
+            },
+            {
+                "group": "org.awaitility",
+                "name": "awaitility",
+                "version": "4.2.0",
+                "config": "testImplementation"
+            }
+        ]
+    },
+    {
+        "file": "fe/hive-udf/build.gradle.kts",
+        "properties": {},
+        "dependencies": [
+            {
+                "group": "io.trino.hive",
+                "name": "hive-apache",
+                "version": null,
+                "config": "compileOnly"
+            },
+            {
+                "group": "project",
+                "name": ":plugin-common",
+                "version": null,
+                "config": "implementation"
+            },
+            {
+                "group": "org.apache.hadoop",
+                "name": "hadoop-client",
+                "version": null,
+                "config": "compileOnly"
+            }
+        ]
+    },
+    {
+        "file": "fe/plugin-common/build.gradle.kts",
+        "properties": {},
+        "dependencies": [
+            {
+                "group": "com.google.guava",
+                "name": "guava",
+                "version": null,
+                "config": "implementation"
+            },
+            {
+                "group": "org.roaringbitmap",
+                "name": "RoaringBitmap",
+                "version": null,
+                "config": "implementation"
+            },
+            {
+                "group": "junit",
+                "name": "junit",
+                "version": null,
+                "config": "testImplementation"
+            },
+            {
+                "group": "com.github.hazendaz.jmockit",
+                "name": "jmockit",
+                "version": null,
+                "config": "testImplementation"
+            },
+            {
+                "group": "-javaagent",
+                "name": "${repositories.mavenLocal().url.path}/com/github/hazendaz/jmockit/jmockit/1.49.4/jmockit-1.49.4.jar",
+                "version": null,
+                "config": "jvmArgs"
+            }
+        ]
+    },
+    {
+        "file": "fe/spark-dpp/build.gradle.kts",
+        "properties": {},
+        "dependencies": [
+            {
+                "group": "project",
+                "name": ":fe-common",
+                "version": null,
+                "config": "implementation"
+            },
+            {
+                "group": "project",
+                "name": ":plugin-common",
+                "version": null,
+                "config": "implementation"
+            },
+            {
+                "group": "com.google.guava",
+                "name": "guava",
+                "version": null,
+                "config": "implementation"
+            },
+            {
+                "group": "com.google.code.gson",
+                "name": "gson",
+                "version": null,
+                "config": "implementation"
+            },
+            {
+                "group": "io.netty",
+                "name": "netty-handler",
+                "version": null,
+                "config": "implementation"
+            },
+            {
+                "group": "org.roaringbitmap",
+                "name": "RoaringBitmap",
+                "version": null,
+                "config": "implementation"
+            },
+            {
+                "group": "commons-codec",
+                "name": "commons-codec",
+                "version": null,
+                "config": "compileOnly"
+            },
+            {
+                "group": "org.apache.commons",
+                "name": "commons-lang3",
+                "version": null,
+                "config": "compileOnly"
+            },
+            {
+                "group": "org.apache.spark",
+                "name": "spark-core_2.12",
+                "version": null,
+                "config": "compileOnly"
+            },
+            {
+                "group": "org.apache.spark",
+                "name": "spark-sql_2.12",
+                "version": null,
+                "config": "compileOnly"
+            },
+            {
+                "group": "org.apache.spark",
+                "name": "spark-catalyst_2.12",
+                "version": null,
+                "config": "compileOnly"
+            },
+            {
+                "group": "org.apache.hadoop",
+                "name": "hadoop-common",
+                "version": null,
+                "config": "compileOnly"
+            },
+            {
+                "group": "org.apache.parquet",
+                "name": "parquet-column",
+                "version": null,
+                "config": "compileOnly"
+            },
+            {
+                "group": "org.apache.parquet",
+                "name": "parquet-hadoop",
+                "version": null,
+                "config": "compileOnly"
+            },
+            {
+                "group": "org.apache.parquet",
+                "name": "parquet-common",
+                "version": null,
+                "config": "compileOnly"
+            },
+            {
+                "group": "commons-collections",
+                "name": "commons-collections",
+                "version": null,
+                "config": "compileOnly"
+            },
+            {
+                "group": "org.scala-lang",
+                "name": "scala-library",
+                "version": null,
+                "config": "compileOnly"
+            },
+            {
+                "group": "com.esotericsoftware",
+                "name": "kryo-shaded",
+                "version": null,
+                "config": "compileOnly"
+            },
+            {
+                "group": "org.apache.logging.log4j",
+                "name": "log4j-slf4j-impl",
+                "version": null,
+                "config": "compileOnly"
+            },
+            {
+                "group": "junit",
+                "name": "junit",
+                "version": null,
+                "config": "testImplementation"
+            },
+            {
+                "group": "com.github.hazendaz.jmockit",
+                "name": "jmockit",
+                "version": null,
+                "config": "testImplementation"
+            },
+            {
+                "group": "-javaagent",
+                "name": "${repositories.mavenLocal().url.path}/com/github/hazendaz/jmockit/jmockit/1.49.4/jmockit-1.49.4.jar",
+                "version": null,
+                "config": "jvmArgs"
+            }
+        ]
+    }
+]
