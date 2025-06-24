@@ -1,9 +1,8 @@
 plugins {
     java
-    id("com.github.johnrengelman.shadow") version "7.1.2"
+    id("com.github.johnrengelman.shadow") version "8.1.1"
 }
 
-// Version is defined in parent POM as 1.0.0
 version = "1.0.0"
 
 java {
@@ -12,9 +11,8 @@ java {
 }
 
 dependencies {
-    // Dependencies from Maven POM
+    implementation(project(":plugin-common"))
     compileOnly("io.trino.hive:hive-apache")
-    implementation(project(":plugin-common"))  // Changed from external to project dependency
     compileOnly("org.apache.hadoop:hadoop-client")
 }
 

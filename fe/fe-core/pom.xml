@@ -120,7 +120,7 @@ under the License.
             <plugin>
                 <groupId>io.github.decster</groupId>
                 <artifactId>thrift-java-maven-plugin</artifactId>
-                <version>0.1.2-SNAPSHOT</version>
+                <version>0.1.2</version>
                 <configuration>
                     <sourceDirectory>${starrocks.home}/gensrc/thrift</sourceDirectory>
                     <incrementalCompilation>true</incrementalCompilation>
