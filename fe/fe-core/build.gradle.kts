@@ -1,10 +1,11 @@
 import org.gradle.api.tasks.testing.logging.TestLogEvent
 import org.gradle.api.tasks.testing.logging.TestExceptionFormat
+import com.baidu.jprotobuf.plugin.PrecompileTask
 
 plugins {
     java
     antlr
-    //id("com.baidu.jprotobuf") version "1.2.1"
+    id("com.baidu.jprotobuf") version "1.2.1"
 }
 
 java {
@@ -83,7 +84,7 @@ dependencies {
     testImplementation("com.mockrunner:mockrunner-jdbc") {
         exclude(group = "xerces", module = "xercesImpl")
     }
-    implementation("com.mysql:mysql-connector-j")
+    //implementation("com.mysql:mysql-connector-j")
     implementation("com.opencsv:opencsv")
     implementation("com.oracle.database.jdbc:ojdbc10")
     implementation("com.oracle.database.nls:orai18n")
@@ -269,7 +270,7 @@ dependencies {
     // dependency sync end
 
     // extra dependencies pom.xml does not have
-    implementation("com.starrocks:jprotobuf-starrocks:${project.ext["jprotobuf-starrocks.version"]}:jar-with-dependencies")
+    implementation("com.starrocks:jprotobuf-starrocks:${project.ext["jprotobuf-starrocks.version"]}")
     implementation("org.apache.groovy:groovy:4.0.9")
     testImplementation("org.apache.spark:spark-sql_2.12")
 }
@@ -412,23 +413,14 @@ tasks.compileJava {
     dependsOn("generateGrammarSource", "generateThriftSources", "generateProtoSources", "generateByScripts")
 }
 
-//tasks.named<PrecompileTask>("jprotobuf_precompile") {
-//    filterClassPackage="com.starrocks.proto;com.starrocks.rpc;com.starrocks.server"
-//    generateProtoFile="false"
-//}
+tasks.named<PrecompileTask>("jprotobuf_precompile") {
+    filterClassPackage="com.starrocks.proto;com.starrocks.rpc;com.starrocks.server"
+    generateProtoFile="true"
+}
 
 tasks.named<ProcessResources>("processTestResources") {
     duplicatesStrategy = DuplicatesStrategy.EXCLUDE
 }
-
-//// Configure test task
-//tasks.test {
-//    maxParallelForks = (project.findProperty("fe_ut_parallel") as String? ?: "1").toInt()
-//    testLogging {
-//        events = setOf(TestLogEvent.PASSED, TestLogEvent.SKIPPED, TestLogEvent.FAILED)
-//    }
-//    systemProperty("starrocks.home", project.ext["starrocks.home"] as String)
-//}
 
 // Configure test task
 tasks.test {
@@ -459,7 +451,12 @@ tasks.test {
     systemProperty("starrocks.home", project.ext["starrocks.home"] as String)
 
     // Add JMockit Java agent to JVM arguments
-    jvmArgs("-javaagent:${configurations.testCompileClasspath.get().find { it.name.contains("jmockit") }?.absolutePath}")
+    jvmArgs(
+        //"-Xlog:class+load,class+unload",
+        "-Djdk.attach.allowAttachSelf",
+        //"-XX:StartFlightRecording=filename=build/test-profile.jfr,duration=10s,settings=profile",
+        "-javaagent:${configurations.testCompileClasspath.get().find { it.name.contains("jmockit") }?.absolutePath}"
+    )
 
     // Use independent class loading (equivalent to useSystemClassLoader=false)
     systemProperty("java.security.manager", "allow")

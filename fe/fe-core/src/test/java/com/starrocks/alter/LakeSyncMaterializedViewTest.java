@@ -23,6 +23,7 @@ import com.starrocks.catalog.MaterializedIndexMeta;
 import com.starrocks.catalog.MaterializedView;
 import com.starrocks.catalog.OlapTable;
 import com.starrocks.catalog.Table;
+import com.starrocks.common.FeConstants;
 import com.starrocks.common.Pair;
 import com.starrocks.qe.ConnectContext;
 import com.starrocks.qe.ShowResultSet;
@@ -66,6 +67,7 @@ public class LakeSyncMaterializedViewTest {
 
     @BeforeClass
     public static void beforeClass() throws Exception {
+        FeConstants.runningUnitTest = true;
         UtFrameUtils.createMinStarRocksCluster(RunMode.SHARED_DATA);
         //ConnectorPlanTestBase.doInit(temp.newFolder().toURI().toString());
         // create connect context

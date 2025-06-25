@@ -17,6 +17,7 @@ package com.starrocks.alter;
 import com.starrocks.catalog.Database;
 import com.starrocks.catalog.GlobalStateMgrTestUtil;
 import com.starrocks.catalog.OlapTable;
+import com.starrocks.common.FeConstants;
 import com.starrocks.common.StarRocksException;
 import com.starrocks.qe.ConnectContext;
 import com.starrocks.server.GlobalStateMgr;
@@ -47,6 +48,7 @@ public class CompactionHandlerTest {
 
     @BeforeClass
     public static void beforeClass() throws Exception {
+        FeConstants.runningUnitTest = true;
         UtFrameUtils.createMinStarRocksCluster(RunMode.SHARED_DATA);
         // create connect context
         connectContext = UtFrameUtils.createDefaultCtx();

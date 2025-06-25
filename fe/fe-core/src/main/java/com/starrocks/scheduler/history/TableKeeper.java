@@ -18,6 +18,7 @@ import com.google.common.collect.Lists;
 import com.starrocks.catalog.OlapTable;
 import com.starrocks.catalog.PartitionInfo;
 import com.starrocks.common.Config;
+import com.starrocks.common.FeConstants;
 import com.starrocks.common.util.FrontendDaemon;
 import com.starrocks.load.loadv2.LoadsHistorySyncer;
 import com.starrocks.qe.SimpleExecutor;
@@ -61,7 +62,9 @@ public class TableKeeper {
     public synchronized void run() {
         try {
             if (!checkDatabaseExists()) {
-                LOG.warn("database not exists: {}", databaseName);
+                if (!FeConstants.runningUnitTest) {
+                    LOG.warn("database not exists: {}", databaseName);
+                }
                 return;
             }
             if (!checkTableExists()) {

@@ -65,6 +65,7 @@ import com.starrocks.common.AnalysisException;
 import com.starrocks.common.Config;
 import com.starrocks.common.DdlException;
 import com.starrocks.common.FeConstants;
+import com.starrocks.common.Log4jConfig;
 import com.starrocks.common.NotImplementedException;
 import com.starrocks.common.Pair;
 import com.starrocks.common.io.DataOutputBuffer;
@@ -307,6 +308,7 @@ public class UtFrameUtils {
             return;
         }
         try {
+            long startTime = System.currentTimeMillis();
             ThriftConnectionPool.beHeartbeatPool = new MockGenericPool.HeatBeatPool("heartbeat");
             ThriftConnectionPool.backendPool = new MockGenericPool.BackendThriftPool("backend");
 
@@ -322,6 +324,8 @@ public class UtFrameUtils {
             }
             FeConstants.enableUnitStatistics = true;
             CREATED_MIN_CLUSTER.set(true);
+            long duration = System.currentTimeMillis() - startTime;
+            System.out.println("Fe process is started with runMode: " + runMode + " duration: " + duration + " ms");
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -438,7 +442,7 @@ public class UtFrameUtils {
                     continue;
                 }
 
-                System.out.println("find valid port " + port + new Date());
+                System.out.println("find valid port " + port + " Date:" + new Date());
                 return port;
             } catch (Exception e) {
                 e.printStackTrace();

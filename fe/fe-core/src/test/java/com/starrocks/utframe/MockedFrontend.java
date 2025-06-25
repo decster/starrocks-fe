@@ -38,6 +38,7 @@ import com.google.common.base.Preconditions;
 import com.google.common.base.Strings;
 import com.google.common.collect.Maps;
 import com.starrocks.common.Config;
+import com.starrocks.common.FeConstants;
 import com.starrocks.common.util.NetUtils;
 import com.starrocks.common.util.PrintableMap;
 import com.starrocks.ha.FrontendNodeType;
@@ -306,16 +307,16 @@ public class MockedFrontend {
         feThread.start();
         waitForCatalogReady(fe);
         Assert.assertEquals(runMode, RunMode.getCurrentRunMode());
-        System.out.println("Fe process is started with runMode:" + runMode);
     }
 
     private void waitForCatalogReady(FERunnable fe) throws FeStartException {
         int tryCount = 0;
         while (!fe.isReady() && tryCount < 600) {
             try {
-                tryCount++;
-                Thread.sleep(1000);
-                System.out.println("globalStateMgr is not ready, wait for 1 second");
+                Thread.sleep(100);
+                if (!FeConstants.runningUnitTest || ++tryCount % 10 == 0) {
+                    System.out.println("globalStateMgr is not ready, wait for 1 second");
+                }
             } catch (InterruptedException e) {
                 e.printStackTrace();
             }

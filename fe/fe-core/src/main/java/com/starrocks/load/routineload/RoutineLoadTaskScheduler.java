@@ -38,6 +38,7 @@ import com.google.common.annotations.VisibleForTesting;
 import com.google.common.collect.Lists;
 import com.google.common.collect.Queues;
 import com.starrocks.common.Config;
+import com.starrocks.common.FeConstants;
 import com.starrocks.common.InternalErrorCode;
 import com.starrocks.common.LoadException;
 import com.starrocks.common.MetaNotFoundException;
@@ -114,9 +115,11 @@ public class RoutineLoadTaskScheduler extends FrontendDaemon {
         int idleSlotNum = routineLoadManager.getClusterIdleSlotNum();
         // scheduler will be blocked when there is no slot for task in cluster
         if (idleSlotNum <= 0) {
-            LOG.warn("no available be slot to scheduler tasks, wait for {} seconds to scheduler again, " +
-                            "you can set max_routine_load_task_num_per_be bigger in fe.conf, current value is {}",
-                    SLOT_FULL_SLEEP_MS / 1000, Config.max_routine_load_task_num_per_be);
+            if (!FeConstants.runningUnitTest) {
+                LOG.warn("no available be slot to scheduler tasks, wait for {} seconds to scheduler again, " +
+                                "you can set max_routine_load_task_num_per_be bigger in fe.conf, current value is {}",
+                        SLOT_FULL_SLEEP_MS / 1000, Config.max_routine_load_task_num_per_be);
+            }
             Thread.sleep(SLOT_FULL_SLEEP_MS);
             return;
         }

@@ -830,7 +830,9 @@ public class GlobalStateMgr {
         nodeMgr.registerLeaderChangeListener(globalSlotProvider::leaderChangeListener);
 
         this.memoryUsageTracker = new MemoryUsageTracker();
-        this.procProfileCollector = new ProcProfileCollector();
+        if (!FeConstants.runningUnitTest) {
+            this.procProfileCollector = new ProcProfileCollector();
+        }
 
         this.sqlParser = new SqlParser(AstBuilder.getInstance());
         this.analyzer = new Analyzer(Analyzer.AnalyzerVisitor.getInstance());
@@ -1180,6 +1182,7 @@ public class GlobalStateMgr {
                 System.exit(-1);
             }
 
+
             // init plugin manager
             pluginMgr.init();
             auditEventProcessor.start();
@@ -1226,6 +1229,7 @@ public class GlobalStateMgr {
     // wait until FE is ready.
     public void waitForReady() throws InterruptedException {
         long lastLoggingTimeMs = System.currentTimeMillis();
+        int waitTimes = 0;
         while (true) {
             if (isReady()) {
                 LOG.info("globalStateMgr is ready. FE type: {}", feType);
@@ -1233,8 +1237,10 @@ public class GlobalStateMgr {
                 break;
             }
 
-            Thread.sleep(2000);
-            LOG.info("wait globalStateMgr to be ready. FE type: {}. is ready: {}", feType, isReady.get());
+            Thread.sleep(100);
+            if (++waitTimes % 20 == 0) {
+                LOG.info("wait globalStateMgr to be ready. FE type: {}. is ready: {}", feType, isReady.get());
+            }
 
             if (System.currentTimeMillis() - lastLoggingTimeMs > 60000L) {
                 lastLoggingTimeMs = System.currentTimeMillis();
@@ -1321,7 +1327,9 @@ public class GlobalStateMgr {
             isReady.set(true);
 
             String msg = "leader finished to replay journal, can write now.";
-            Util.stdoutWithTime(msg);
+            if (!FeConstants.runningUnitTest) {
+                Util.stdoutWithTime(msg);
+            }
             LOG.info(msg);
 
             // for leader, there are some new thread pools need to register metric
@@ -1498,7 +1506,9 @@ public class GlobalStateMgr {
 
         refreshDictionaryCacheTaskDaemon.start();
 
-        procProfileCollector.start();
+        if (procProfileCollector != null) {
+            procProfileCollector.start();
+        }
 
         warehouseIdleChecker.start();
 

@@ -17,6 +17,7 @@ package com.starrocks.pseudocluster;
 import com.google.common.base.Strings;
 import com.google.common.collect.Maps;
 import com.starrocks.common.Config;
+import com.starrocks.common.FeConstants;
 import com.starrocks.common.Log4jConfig;
 import com.starrocks.common.ThreadPoolManager;
 import com.starrocks.common.util.PrintableMap;
@@ -238,9 +239,10 @@ public class PseudoFrontend {
         int tryCount = 0;
         while (!GlobalStateMgr.getCurrentState().isReady() && tryCount < 600) {
             try {
-                tryCount++;
-                Thread.sleep(1000);
-                System.out.println("globalStateMgr is not ready, wait for 1 second");
+                Thread.sleep(100);
+                if (!FeConstants.runningUnitTest || ++tryCount % 10 == 0) {
+                    System.out.println("globalStateMgr is not ready, wait for 1 second");
+                }
             } catch (InterruptedException e) {
                 e.printStackTrace();
             }

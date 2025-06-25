@@ -62,9 +62,12 @@ public class PipeScheduler extends FrontendDaemon {
                 }
             }
 
-            recovered = pipeManager.getAllPipes().stream().allMatch(Pipe::isRecovered);
-            if (recovered) {
-                LOG.warn("Successfully recover all pipes");
+            List<Pipe> pipes = pipeManager.getAllPipes();
+            if (!pipes.isEmpty()) {
+                recovered = pipes.stream().allMatch(Pipe::isRecovered);
+                if (recovered) {
+                    LOG.warn("Successfully recover all pipes");
+                }
             }
         }
 

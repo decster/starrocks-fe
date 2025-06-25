@@ -17,6 +17,7 @@
 
 package com.starrocks.common.util;
 
+import com.starrocks.common.FeConstants;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
@@ -97,7 +98,9 @@ public class Daemon extends Thread {
             try {
                 runOneCycle();
             } catch (Throwable e) {
-                LOG.error("daemon thread got exception. name: {}", getName(), e);
+                if (!FeConstants.runningUnitTest) {
+                    LOG.error("daemon thread got exception. name: {}", getName(), e);
+                }
             }
 
             try {

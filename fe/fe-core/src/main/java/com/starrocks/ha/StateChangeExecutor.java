@@ -17,6 +17,7 @@ package com.starrocks.ha;
 
 import com.google.common.base.Preconditions;
 import com.google.common.collect.Queues;
+import com.starrocks.common.FeConstants;
 import com.starrocks.common.util.Daemon;
 import com.starrocks.common.util.Util;
 import com.starrocks.server.GlobalStateMgr;
@@ -60,8 +61,10 @@ public class StateChangeExecutor extends Daemon {
     public void notifyNewFETypeTransfer(FrontendNodeType newType) {
         try {
             String msg = "notify new FE type transfer: " + newType;
-            LOG.warn(msg);
-            Util.stdoutWithTime(msg);
+            if (!FeConstants.runningUnitTest) {
+                LOG.warn(msg);
+                Util.stdoutWithTime(msg);
+            }
             typeTransferQueue.put(newType);
         } catch (InterruptedException e) {
             LOG.error("failed to put new FE type: {}, {}.", newType, e);

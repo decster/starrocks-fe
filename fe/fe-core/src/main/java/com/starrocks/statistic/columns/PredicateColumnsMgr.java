@@ -214,7 +214,9 @@ public class PredicateColumnsMgr {
             PredicateColumnsStorage storage = PredicateColumnsStorage.getInstance();
 
             if (!storage.isSystemTableReady()) {
-                LOG.warn("system table of predicate_columns is still not ready");
+                if (!FeConstants.runningUnitTest) {
+                    LOG.warn("system table of predicate_columns is still not ready");
+                }
                 return;
             }
 
