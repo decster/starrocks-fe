@@ -240,7 +240,7 @@ public class PseudoFrontend {
         while (!GlobalStateMgr.getCurrentState().isReady() && tryCount < 600) {
             try {
                 Thread.sleep(100);
-                if (!FeConstants.runningUnitTest || ++tryCount % 10 == 0) {
+                if (!FeConstants.runningUnitTest && ++tryCount % 10 == 0) {
                     System.out.println("globalStateMgr is not ready, wait for 1 second");
                 }
             } catch (InterruptedException e) {

@@ -32,8 +32,16 @@ java {
     }
 }
 
+
+configurations.configureEach {
+    if (name != "thriftGenClasspath") {
+        // thrfit gen plugin uses antlr 4.13, which conflict with current antlr version
+        resolutionStrategy.force("org.antlr:antlr4-runtime:4.9.3")
+    }
+}
+
 dependencies {
-    antlr("org.antlr:antlr4:4.11.1")
+    antlr("org.antlr:antlr4:4.9.3")
 
     // Internal project dependencies
     implementation(project(":fe-common"))
@@ -273,6 +281,8 @@ dependencies {
     implementation("com.starrocks:jprotobuf-starrocks:${project.ext["jprotobuf-starrocks.version"]}")
     implementation("org.apache.groovy:groovy:4.0.9")
     testImplementation("org.apache.spark:spark-sql_2.12")
+    implementation("org.antlr:antlr4-runtime:4.9.3")
+    implementation("software.amazon.awssdk:s3-transfer-manager")
 }
 
 // Configure ANTLR plugin
@@ -424,10 +434,10 @@ tasks.named<ProcessResources>("processTestResources") {
 
 // Configure test task
 tasks.test {
-    maxParallelForks = 1 // (project.findProperty("fe_ut_parallel") as String? ?: "1").toInt()
+    maxParallelForks = 8 // (project.findProperty("fe_ut_parallel") as String? ?: "1").toInt()
 
     // Don't reuse JVM processes for tests
-    forkEvery = 1
+    forkEvery = 0 // 1
 
     maxHeapSize = "4096m"
 
@@ -455,6 +465,7 @@ tasks.test {
         //"-Xlog:class+load,class+unload",
         "-Djdk.attach.allowAttachSelf",
         //"-XX:StartFlightRecording=filename=build/test-profile.jfr,duration=10s,settings=profile",
+        "-Duser.timezone=Asia/Shanghai",
         "-javaagent:${configurations.testCompileClasspath.get().find { it.name.contains("jmockit") }?.absolutePath}"
     )
 

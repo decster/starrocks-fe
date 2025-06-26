@@ -18,7 +18,7 @@ import com.starrocks.proto.CompactStat;
 import org.junit.Assert;
 import org.junit.Test;
 
-class CompactionProfileTest {
+public class CompactionProfileTest {
     @Test
     public void testBasic() {
         CompactStat stat = new CompactStat();
@@ -28,6 +28,9 @@ class CompactionProfileTest {
         stat.readTimeLocal = 4L;
         stat.readBytesLocal = 5L;
         stat.inQueueTimeSec = 6;
+        stat.readSegmentCount = 7L;
+        stat.writeSegmentCount = 8L;
+        stat.writeSegmentBytes = 9L;
 
         CompactionProfile profile = new CompactionProfile(stat);
 
@@ -38,5 +41,8 @@ class CompactionProfileTest {
         Assert.assertTrue(s.contains("read_remote_sec"));
         Assert.assertTrue(s.contains("read_remote_mb"));
         Assert.assertTrue(s.contains("in_queue_sec"));
+        Assert.assertTrue(s.contains("read_segment_count"));
+        Assert.assertTrue(s.contains("write_segment_count"));
+        Assert.assertTrue(s.contains("write_segment_mb"));
     }
 }
